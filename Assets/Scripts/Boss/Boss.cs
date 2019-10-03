@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Boss : MonoBehaviour
     private bool        m_IsFacingRight= true;      // 방향
     private bool        m_IsSummon_Angle = false;   // 소환 상태
     private Vector3     m_Velocity = Vector3.zero;  // 속도
+
+    public Image        m_HPbar;                    // 보스 체력바
 
     public GameObject   m_Player;                   // 플레이어 정보
 
@@ -40,6 +43,8 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_HPbar.fillAmount = Percent(m_HP, m_MaxHP) / 100.0f;
+
         if (!m_Animator.GetBool("IsAttack") && !m_IsAttack && m_IsMove)
         {
             float direction = 1.0f;
@@ -53,7 +58,6 @@ public class Boss : MonoBehaviour
         if (!m_Animator.GetBool("IsAttack") && !m_IsAttack)
         {
             float Per = Percent(m_HP, m_MaxHP);
-            Debug.Log("보스의 체력이 " + Per + "%만큼 남았어!");
 
             if (Per <= 20.0f)                       // 체력 10% 미만 일 때
             {
