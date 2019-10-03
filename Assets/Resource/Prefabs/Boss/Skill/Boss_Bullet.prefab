@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5488915325291058775}
   - component: {fileID: 6487834076506930794}
   - component: {fileID: 724857881802653004}
+  - component: {fileID: 6078892168873780715}
   m_Layer: 0
   m_Name: Boss_Bullet
   m_TagString: Untagged
@@ -114,8 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ea5d654a2a4e94896454c987b68536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {x: 10, y: 10, z: 0}
-  m_Speed: 10
+  m_Target: {x: 0, y: 0, z: 0}
+  m_Speed: 15
 --- !u!58 &724857881802653004
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -132,3 +133,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.40625
+--- !u!50 &6078892168873780715
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488915325291058772}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

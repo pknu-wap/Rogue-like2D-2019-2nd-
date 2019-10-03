@@ -20,10 +20,6 @@ public class ObjectPoolItem
 [System.Serializable]
 public class ObjectPooler : Singleton<ObjectPooler>
 {
-    public enum OBJECTPOOLER
-    {
-    }
-
     public GameObject parent;
 
     public List<ObjectPoolItem> itemsToPool;

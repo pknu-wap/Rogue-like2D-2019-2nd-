@@ -6,13 +6,19 @@ public class Boss : MonoBehaviour
 {
     private Animator animator;
 
-    // 보스 
+    // 보스
     public float        m_HP = 100.0f;              // 체력
+    public float        m_MaxHP = 100.0f;           // 최대 체력
     public float        m_Speed;                    // 이동 속도
 
     // 보스 상태 관련 변수
+    private bool        m_IsMove = true;            // 이동 상태
+    private bool        m_IsAttack = false;         // 공격 상태
     private bool        m_IsFacingRight= true;      // 방향
+    private bool        m_IsSummon_Angle = false;   // 소환 상태
     private Vector3     m_Velocity = Vector3.zero;  // 속도
+
+    public GameObject   m_Player;                   // 플레이어 정보
 
     #region ---------- Inspector ----------
     private Animator    m_Animator;
@@ -34,25 +40,95 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!m_Animator.GetBool("IsAttack") && !m_IsAttack && m_IsMove)
+        {
+            float direction = 1.0f;
+            if (gameObject.transform.position.x - m_Player.transform.position.x <= 0.0f)
+                direction = 1.0f;
+            else
+                direction = -1.0f;
+            Move(direction * Time.deltaTime * m_Speed);
+        }
 
+        if (!m_Animator.GetBool("IsAttack") && !m_IsAttack)
+        {
+            float Per = Percent(m_HP, m_MaxHP);
+            Debug.Log("보스의 체력이 " + Per + "%만큼 남았어!");
+
+            if (Per <= 20.0f)                       // 체력 10% 미만 일 때
+            {
+                if(!m_IsSummon_Angle)
+                {
+                    m_IsSummon_Angle = true;
+                    m_Animator.SetBool("IsAttack", true);
+                    StartCoroutine(m_BossSkill.Summon_Angle(gameObject.transform.position));
+                    StartCoroutine(AttackDelay(7.0f));
+                }
+                switch (Random.Range(0, 750))
+                {
+                    case 0:
+                        m_Animator.SetBool("IsAttack", true);
+                        StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
+                        StartCoroutine(AttackDelay(7.0f));
+                        break;
+                    case 1:
+                        m_Animator.SetBool("IsAttack", true);
+                        StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 10.0f, -3.5f)));
+                        StartCoroutine(AttackDelay(10.0f));
+                        break;
+                }
+            }
+            else if(Per <= 50.0f)                   // 체력 70% 미만 일 때
+            {
+                switch(Random.Range(0, 500))
+                {
+                    case 0:
+                        m_Animator.SetBool("IsAttack", true);
+                        StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
+                        StartCoroutine(AttackDelay(7.0f));
+                        break;
+                    case 1:
+                        m_Animator.SetBool("IsAttack", true);
+                        StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 10.0f, -3.5f)));
+                        StartCoroutine(AttackDelay(10.0f));
+                        break;
+                }
+            }
+            else
+            {
+                if (Random.Range(0, 250) == 0)
+                {
+                    m_Animator.SetBool("IsAttack", true);
+                    StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
+                    StartCoroutine(AttackDelay(7.0f));
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !m_Animator.GetBool("IsAttack") && !m_IsAttack)
+        {
+            m_Animator.SetBool("IsAttack", true);
+            StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 6.0f, -3.5f)));
+            StartCoroutine(AttackDelay(10.0f));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !m_Animator.GetBool("IsAttack") && !m_IsAttack)
+        {
+            m_Animator.SetBool("IsAttack", true);
+            StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
+            StartCoroutine(AttackDelay(10.0f));
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) && !m_Animator.GetBool("IsAttack") && !m_IsAttack)
+        {
+            m_IsSummon_Angle = true;
+            m_Animator.SetBool("IsAttack", true);
+            StartCoroutine(m_BossSkill.Summon_Angle(gameObject.transform.position));
+            StartCoroutine(AttackDelay(7.0f));
+        }
     }
 
     private void FixedUpdate()
     {
-        if (!m_Animator.GetBool("IsAttack"))
-            Move(Input.GetAxisRaw("Horizontal") * Time.fixedDeltaTime * m_Speed);
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !m_Animator.GetBool("IsAttack"))
-        {
-            m_Animator.SetBool("IsAttack", true);
-            StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(-10.0f, -3.5f)));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !m_Animator.GetBool("IsAttack"))
-        {
-            m_Animator.SetBool("IsAttack", true);
-            StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
-        }
     }
     
     ///  <summary>
@@ -65,15 +141,10 @@ public class Boss : MonoBehaviour
         m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, 0.3f);
 
         if (move < 0 && !m_IsFacingRight)
-        {
             Flip();
-        }
         else if(move > 0 && m_IsFacingRight)
-        {
             Flip();
-        }
     }
-
 
     ///  <summary>
     ///  오브젝트 방향 함수
@@ -85,5 +156,42 @@ public class Boss : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    ///  <summary>
+    ///  백분율
+    ///  </summary>
+    /// <param name="a"> 일부 값 </param>
+    /// <param name="b"> 전체 값 </param>
+    private float Percent(float a, float b)
+    {
+        return (a / b) * 100.0f;
+    }
+
+    ///  <summary>
+    ///  공격 후 딜레이 ( 수정 필요 )
+    ///  </summary>
+    /// <param name="time"> 딜레이 시간 (Second) </param>
+    private IEnumerator AttackDelay(float time)
+    {
+        m_IsAttack = true;
+        yield return new WaitForSeconds(time);
+        m_IsAttack = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            m_IsMove = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            m_IsMove = true;
+        }
     }
 }
