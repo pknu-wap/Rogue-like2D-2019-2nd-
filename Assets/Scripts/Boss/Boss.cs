@@ -64,7 +64,7 @@ public class Boss : MonoBehaviour
                     StartCoroutine(m_BossSkill.Summon_Angle(gameObject.transform.position));
                     StartCoroutine(AttackDelay(7.0f));
                 }
-                switch (Random.Range(0, 750))
+                switch (Random.Range(0, 500))
                 {
                     case 0:
                         m_Animator.SetBool("IsAttack", true);
@@ -74,7 +74,7 @@ public class Boss : MonoBehaviour
                     case 1:
                         m_Animator.SetBool("IsAttack", true);
                         StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 10.0f, -3.5f)));
-                        StartCoroutine(AttackDelay(10.0f));
+                        StartCoroutine(AttackDelay(7.0f));
                         break;
                 }
             }
@@ -90,7 +90,7 @@ public class Boss : MonoBehaviour
                     case 1:
                         m_Animator.SetBool("IsAttack", true);
                         StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 10.0f, -3.5f)));
-                        StartCoroutine(AttackDelay(10.0f));
+                        StartCoroutine(AttackDelay(7.0f));
                         break;
                 }
             }
@@ -109,14 +109,14 @@ public class Boss : MonoBehaviour
         {
             m_Animator.SetBool("IsAttack", true);
             StartCoroutine(m_BossSkill.Summon_Tentacles(new Vector3(m_Player.transform.position.x - 6.0f, -3.5f)));
-            StartCoroutine(AttackDelay(10.0f));
+            StartCoroutine(AttackDelay(7.0f));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2) && !m_Animator.GetBool("IsAttack") && !m_IsAttack)
         {
             m_Animator.SetBool("IsAttack", true);
             StartCoroutine(m_BossSkill.Fire_Bullet(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y)));
-            StartCoroutine(AttackDelay(10.0f));
+            StartCoroutine(AttackDelay(7.0f));
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && !m_Animator.GetBool("IsAttack") && !m_IsAttack)
         {
@@ -137,8 +137,9 @@ public class Boss : MonoBehaviour
     /// <param name="move"> 이동 방향 </param>
     private void Move(float move)
     {
-        Vector3 targetVelocity = new Vector2(move * 10.0f, m_Rigidbody2D.velocity.y);
-        m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, 0.3f);
+        m_Rigidbody2D.position += new Vector2(move, 0.0f);
+        //Vector3 targetVelocity = new Vector2(move * 10.0f, m_Rigidbody2D.velocity.y);
+        //m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, 0.3f);
 
         if (move < 0 && !m_IsFacingRight)
             Flip();

@@ -67,10 +67,13 @@
     <Compile Include="Assets\Scripts\Boss\Skill\Boss_Bullet.cs" />
     <Compile Include="Assets\Scripts\Boss\Skill\Boss_Skill.cs" />
     <Compile Include="Assets\Scripts\Boss\Skill\Boss_Summon_Tentacles.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\FadeController.cs" />
+    <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\GameManager_Pause.cs" />
     <Compile Include="Assets\Scripts\Monster\Angel\Angel.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Singleten.cs" />
+    <Compile Include="Assets\Scripts\UI.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\CameraController.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\Enemy.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\HurtPlayer.cs" />
@@ -81,6 +84,8 @@
     <Compile Include="Assets\Underwater Diving\Scripts\TitleScreen.cs" />
     <Compile Include="Assets\UnderwaterFantasy\Scripts\Done_BGScroller.cs" />
     <Compile Include="Assets\UnderwaterFantasy\Scripts\Perspective2DSortMode.cs" />
+    <None Include="Assets\Resource\UI\UI Kit\AI Files\README.txt" />
+    <None Include="Assets\Resource\UI\UI Kit\Font\README.txt" />
     <None Include="Assets\Gothicvania Cemetery Artwork\about.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Nani/Desktop/Escape/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
