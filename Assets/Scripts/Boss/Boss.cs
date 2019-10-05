@@ -19,7 +19,7 @@ public class Boss : MonoBehaviour
     private bool        m_IsSummon_Angle = false;   // 소환 상태
     private Vector3     m_Velocity = Vector3.zero;  // 속도
 
-    public Image        m_HPbar;                    // 보스 체력바
+    public Image        m_HPBar;                    // 보스 체력바
 
     public GameObject   m_Player;                   // 플레이어 정보
 
@@ -43,7 +43,7 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_HPbar.fillAmount = Percent(m_HP, m_MaxHP) / 100.0f;
+        m_HPBar.fillAmount = Percent(m_HP, m_MaxHP) / 100.0f;
 
         if (!m_Animator.GetBool("IsAttack") && !m_IsAttack && m_IsMove)
         {
