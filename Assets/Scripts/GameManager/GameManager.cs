@@ -18,6 +18,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
        nBoss_Bullet = 1,
        nAngel_Bullet = 2,
        nAngel = 3,
+       nGhost = 4,
     }
 
     // Start is called before the first frame update

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
+    public bool clicked;
     public FadeController fader;
 
     // Start is called before the first frame update
@@ -17,6 +18,7 @@ public class UI : MonoBehaviour
 
     public void OnStartButton(string scene)
     {
+        clicked = true;
         Time.timeScale = 1.0f;
         fader.FadeIn(1.0f, () =>
         {

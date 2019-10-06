@@ -70,7 +70,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
         return pooledObjectsList[index];
     }
 
-    public int AddObject(GameObject obj, int amt = 3, bool exp = true)
+    public int AddObject(GameObject obj, int amt = 4, bool exp = true)
     {
         ObjectPoolItem item = new ObjectPoolItem(obj, amt, exp);
         int currLen = itemsToPool.Count;

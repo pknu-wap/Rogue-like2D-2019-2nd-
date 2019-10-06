@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0FB0ABFC-946D-1633-8070-49DD687763D9}</ProjectGuid>
+    <ProjectGuid>{3D3F731F-9472-B8A9-2FBF-9C44C76F9D7F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,17 +62,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Boss\Boss.cs" />
-    <Compile Include="Assets\Scripts\Boss\Skill\Boss_Bullet.cs" />
-    <Compile Include="Assets\Scripts\Boss\Skill\Boss_Skill.cs" />
-    <Compile Include="Assets\Scripts\Boss\Skill\Boss_Summon_Tentacles.cs" />
     <Compile Include="Assets\Scripts\FadeController.cs" />
+    <Compile Include="Assets\Scripts\GameManager\Camera\followCamera.cs" />
+    <Compile Include="Assets\Scripts\GameManager\Dialog\Dialog.cs" />
+    <Compile Include="Assets\Scripts\GameManager\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager_Pause.cs" />
-    <Compile Include="Assets\Scripts\Monster\Angel\Angel.cs" />
+    <Compile Include="Assets\Scripts\GameManager\ItemManager\ItemManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\SoundManager\InstSoundManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\SoundManager\Sound\Sound.cs" />
+    <Compile Include="Assets\Scripts\GameManager\SoundManager\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Boss\Boss.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Boss\Skill\Boss_Bullet.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Boss\Skill\Boss_Skill.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Boss\Skill\Boss_Summon_Tentacles.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Angel\Angel.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\BurningGhoul\BurningGhoul.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\BurningGhoul\WallCollider.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Ghost\Ghost\Ghost.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Ghost\Ghost\Weapon\Bullet\GhostBullet.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Ghost\Ghost\Weapon\GhostGun.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Monster.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Skeleton\Blood.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Skeleton\Skeleton.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\MovingObject.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Player\Weapon\Bullet\Bullet.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Player\Weapon\Gun.cs" />
     <Compile Include="Assets\Scripts\ObjectPooler.cs" />
-    <Compile Include="Assets\Scripts\Singleten.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\UI.cs" />
+    <Compile Include="Assets\SoundManager\Demo\SoundManagerDemo.cs" />
+    <Compile Include="Assets\SoundManager\SoundManager.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\CameraController.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\Enemy.cs" />
     <Compile Include="Assets\Underwater Diving\Scripts\HurtPlayer.cs" />
@@ -83,41 +104,44 @@
     <Compile Include="Assets\Underwater Diving\Scripts\TitleScreen.cs" />
     <Compile Include="Assets\UnderwaterFantasy\Scripts\Done_BGScroller.cs" />
     <Compile Include="Assets\UnderwaterFantasy\Scripts\Perspective2DSortMode.cs" />
+    <None Include="Assets\SoundManager\Readme.txt" />
     <None Include="Assets\Resource\UI\UI Kit\AI Files\README.txt" />
+    <None Include="Assets\TS Sounds\Read Me.txt" />
     <None Include="Assets\Resource\UI\UI Kit\Font\README.txt" />
     <None Include="Assets\Gothicvania Cemetery Artwork\about.txt" />
+    <None Include="Assets\Blood decal pack\readme.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/IH/Desktop/Escape/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/nave0/Desktop/새 폴더/프로그래밍/2019_02_WAP/Rogue-like2D-2019-2nd-/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
