@@ -208,12 +208,17 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
-  movePower: 2
-  jumpPower: 0.01
+  hp: 100
+  movePower: 10
+  jumpPower: 0.02
   recoil: 0.0025
   debugSize: 5
   shootChance: 0
   shootInterval: 1
+  hpBar: {fileID: 0}
+  hpText: {fileID: 0}
+  speedByItem: 0
+  itemManager: {fileID: 0}
 --- !u!50 &7766083654920503452
 Rigidbody2D:
   serializedVersion: 4

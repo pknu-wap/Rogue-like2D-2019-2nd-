@@ -16,7 +16,7 @@ public class Boss : MonoBehaviour
     private bool isDead = false;
     private bool        m_IsMove = true;            // 이동 상태
     private bool        m_IsAttack = false;         // 공격 상태
-    private bool        m_IsFacingRight= true;      // 방향
+    private bool        m_IsFacingRight= false;      // 방향
     private bool        m_IsSummon_Angle = false;   // 소환 상태
     private Vector3     m_Velocity = Vector3.zero;  // 속도
 
