@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6546745535745430841}
   - component: {fileID: 7600232788918804938}
   - component: {fileID: 5944277214221265698}
+  - component: {fileID: 4520681331269078726}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -122,3 +123,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24265462, y: 0.07706424}
   m_EdgeRadius: 0
+--- !u!50 &4520681331269078726
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076455751572808086}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

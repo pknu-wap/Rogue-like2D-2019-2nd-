@@ -177,6 +177,8 @@ public class Skeleton : Monster
         {
             Debug.Log("bullet");
             Bullet bullet = collision.GetComponent<Bullet>();
+            if (bullet == null)
+                return;
             DamagedByPlayerBullet(bullet.damage);
             ChangeMonsterState(MONSTER_STATUS.CHASE);
         }

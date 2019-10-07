@@ -9,6 +9,8 @@ public class rizePoint : MonoBehaviour
 
     void Update()
     {
+        if (ghoul == null)
+            return;
         if (Vector2.Distance(transform.position, player.transform.position) < 5f)
         {
             ghoul.SetActive(true);
