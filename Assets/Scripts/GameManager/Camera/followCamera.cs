@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class followCamera : MonoBehaviour
 {
-
+    public Vector3 holdYpos;
     public Player player;
     public float dist = 10f;
 
@@ -15,9 +15,10 @@ public class followCamera : MonoBehaviour
         fC = player.transform;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, fC.position, Time.deltaTime);
+        holdYpos = fC.position - new Vector3(0, fC.position.y + 1, 0);
+        transform.position = Vector3.Lerp(transform.position, holdYpos, Time.deltaTime);
         transform.Translate(0, 0.1f, -3);
     }
 }

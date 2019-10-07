@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 3
   isRight: 0
+  damage: 20
   DestroyBulletMotion: {fileID: 0}
 --- !u!61 &5944277214221265698
 BoxCollider2D:

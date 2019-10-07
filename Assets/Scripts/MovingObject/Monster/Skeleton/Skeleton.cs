@@ -140,7 +140,7 @@ public class Skeleton : Monster
             if (target.transform.position.x - transform.position.x < AttackRadius || target.transform.position.x - transform.position.x > -AttackRadius) // 3
                 target.GetComponent<Player>().PlayerDamaged(damage);
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(1f);
            
         } while (!isNewState);
     }
@@ -175,7 +175,9 @@ public class Skeleton : Monster
     {
         if (collision.CompareTag("Bullet"))
         {
-            DamagedByPlayerBullet(damage);
+            Debug.Log("bullet");
+            Bullet bullet = collision.GetComponent<Bullet>();
+            DamagedByPlayerBullet(bullet.damage);
             ChangeMonsterState(MONSTER_STATUS.CHASE);
         }
     }

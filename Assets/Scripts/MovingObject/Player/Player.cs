@@ -195,6 +195,12 @@ public class Player : MovingObject
             itemManager.GetItem(other.gameObject.name);
             other.gameObject.SetActive(false);
         }
+
+        if(other.gameObject.tag == "DeadZone")
+        {
+            Debug.Log("deadzone");
+            Dead();
+        }
     }
 
 }

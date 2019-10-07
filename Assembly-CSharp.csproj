@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager_Pause.cs" />
     <Compile Include="Assets\Scripts\GameManager\ItemManager\ItemManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager\Respawn.cs" />
     <Compile Include="Assets\Scripts\GameManager\SoundManager\InstSoundManager.cs" />
     <Compile Include="Assets\Scripts\GameManager\SoundManager\Sound\Sound.cs" />
     <Compile Include="Assets\Scripts\GameManager\SoundManager\SoundManager.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\MovingObject\Monster\Ghost\Ghost\Weapon\GhostGun.cs" />
     <Compile Include="Assets\Scripts\MovingObject\Monster\Monster.cs" />
     <Compile Include="Assets\Scripts\MovingObject\Monster\Skeleton\Blood.cs" />
+    <Compile Include="Assets\Scripts\MovingObject\Monster\Skeleton\rizePoint.cs" />
     <Compile Include="Assets\Scripts\MovingObject\Monster\Skeleton\Skeleton.cs" />
     <Compile Include="Assets\Scripts\MovingObject\MovingObject.cs" />
     <Compile Include="Assets\Scripts\MovingObject\Player\Player.cs" />

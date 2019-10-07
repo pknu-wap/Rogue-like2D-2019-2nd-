@@ -7,9 +7,10 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     float bulletSpeed = 3.0f;
     public bool isRight;
+    public int damage;
     [SerializeField]
     GameObject DestroyBulletMotion;
-    private int damage;
+
     void GunShot()
     {
         if (isRight)

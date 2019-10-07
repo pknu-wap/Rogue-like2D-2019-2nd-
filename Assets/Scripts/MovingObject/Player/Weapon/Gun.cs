@@ -18,7 +18,7 @@ public class Gun : MonoBehaviour
                 {
                     Bullet _bullet = Instantiate(bullet, new Vector3(transform.position.x + i, transform.position.y, -4), Quaternion.identity).GetComponent<Bullet>();
 
-                    _bullet.SetGun(3, 20);
+                    _bullet.SetGun(5, 20);
 
                     if (player.transform.localScale.x > 0)
                     {

@@ -12,6 +12,7 @@ TagManager:
   - Boss
   - Monster
   - Item
+  - DeadZone
   layers:
   - Default
   - TransparentFX

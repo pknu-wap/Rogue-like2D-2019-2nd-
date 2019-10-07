@@ -67,6 +67,11 @@ public class BurningGhoul : Monster
         {
             Dead();
         }
+
+        if (collision.CompareTag("Player"))
+        {
+            ChangeMonsterState(MONSTER_STATUS.ATTACK);
+        }
     }
 
     public override IEnumerator ATTACK()

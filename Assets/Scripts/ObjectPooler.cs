@@ -18,7 +18,7 @@ public class ObjectPoolItem
 }
 
 [System.Serializable]
-public class ObjectPooler : Singleton<ObjectPooler>
+public class ObjectPooler : SingletonMonobehaviour<ObjectPooler>
 {
     public GameObject parent;
 

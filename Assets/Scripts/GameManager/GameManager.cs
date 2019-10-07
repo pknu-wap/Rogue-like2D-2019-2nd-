@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
-    public ObjectPooler objectPooler = ObjectPooler.Instance;
-
+    [SerializeField]
+    public ObjectPooler objectPooler;
 
     public delegate void GameManagerEventHandle();
     public event GameManagerEventHandle PauseToggleEvent;
@@ -21,9 +21,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
        nGhost = 4,
     }
 
+    //void Awake()
+    //{
+    //    objectPooler = ObjectPooler.Instance;
+    //}
+
     // Start is called before the first frame update
     void Start()
     {
+        objectPooler = ObjectPooler.Instance;
         objectPooler.Initialize();
     }
 
