@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MovingObject
+public class Player : MonoBehaviour
 {
     public int hp = 100;
+    public float speedByItem;
     public float movePower = 2f;
     public float jumpPower = .001f;
     public float recoil = 0.0015f;
@@ -15,7 +16,6 @@ public class Player : MovingObject
     public double shootInterval = 0.45f;
     public Image hpBar;
     public Text hpText;
-    public float speedByItem;
     public ItemManager itemManager;
 
     private bool isDead = false;
@@ -23,23 +23,23 @@ public class Player : MovingObject
     private int maxHp = 100;
     private float horizontalMove;
     private float verticalMove;
+    private Vector2 recoilPower;
     private Animator animator;
     private AnimatorClipInfo[] clipInfo;
     private Rigidbody2D rigidy;
     private Gun gun;
 
 
-    protected override void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         rigidy = GetComponent<Rigidbody2D>();
         gun = transform.GetChild(0).GetComponent<Gun>();
         speedByItem = 1;
-        base.Start();
     }
 
     private void Update()
-    {
+    {      
         UpdatePlayerMovement();
 
         if (Input.GetKeyDown(KeyCode.LeftAlt))
@@ -51,19 +51,37 @@ public class Player : MovingObject
         {
             if(shootInterval <= shootChance)
                 Attack();
+        }     
+    }
+
+    public void UpdatePlayerMovement()
+    {
+        if (!isDead)
+        {
+            horizontalMove = Input.GetAxisRaw("Horizontal");
+            verticalMove = Input.GetAxisRaw("Vertical");
+
+            shootChance += Time.deltaTime;
+
+            if (shootChance > 2)
+                shootChance = 0;
+
+            Move();
         }
     }
 
     public void PlayerDamaged(int damage)
     {
         hp -= damage;
-        if (hp < 0)
+
+        if (hp <= 0)
         {
             hp = 0;
             hpText.text = "Dead";
             hpBar.fillAmount = 0;
             Dead();
         }
+
         hpText.text = hp.ToString();
         hpBar.fillAmount = Percent(hp, maxHp) / 100.0f;
     }
@@ -110,7 +128,6 @@ public class Player : MovingObject
         else
             recoil = - Mathf.Abs(recoil);
 
-
         Vector2 recoilPower = new Vector2(recoil, 0) * debugSize;
         rigidy.AddForce(recoilPower, ForceMode2D.Impulse);
     }
@@ -126,31 +143,13 @@ public class Player : MovingObject
         }
     }
 
-    public void UpdatePlayerMovement()
-    {
-        if (!isDead)
-        {
-            horizontalMove = Input.GetAxisRaw("Horizontal");
-            verticalMove = Input.GetAxisRaw("Vertical");
-
-            shootChance += Time.deltaTime;
-
-            if (shootChance > 2)
-                shootChance = 0;
-
-            Move();
-        }
-    }
-
     void Move()
-    {
-        
+    {    
         clipInfo = animator.GetCurrentAnimatorClipInfo(0);
 
         if (clipInfo[0].clip.name == "playerShoot" || clipInfo[0].clip.name == "crouchShoot")
             return;
             
-
         Vector3 moveVelocity = Vector3.zero;
 
         if (horizontalMove < 0)
@@ -198,9 +197,7 @@ public class Player : MovingObject
 
         if(other.gameObject.tag == "DeadZone")
         {
-            Debug.Log("deadzone");
             Dead();
         }
     }
-
 }

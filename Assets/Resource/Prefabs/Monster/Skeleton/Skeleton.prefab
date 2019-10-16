@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 3806019734792902935}
   - component: {fileID: 3806019734792902930}
   - component: {fileID: 3806019734792902931}
-  - component: {fileID: 2969313242509035762}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Monster
@@ -213,50 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7b2362d035a5f419da881127667a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterType: 0
-  monsterStatus: 0
-  Speed: 3
-  AttackSpeed: 0
-  attack: 0
-  attackTime: 0
-  Hp: 5
-  MaxHp: 5
-  MovingFlag: 0
-  damage: 3
-  isDead: 0
-  isAttacked: 0
-  DetectRadius: 5
-  AttackRadius: 3
-  Detect: 0
-  DetectTime: 0
-  isAtacking: 0
-  isTracing: 0
-  target: {fileID: 0}
-  isNewState: 0
-  animator: {fileID: 0}
-  bloodRange: 0
+  bloodRange: 3
   bloodTiles:
   - {fileID: 8464603098515522380, guid: bd1f6f64cd619414ea7618abce0e0d48, type: 3}
   - {fileID: 2370729413966345562, guid: 56157535d8962454f8388839ff661cf0, type: 3}
   - {fileID: 4626342086783803815, guid: 462391cde5b39f348925f3a2a4007a44, type: 3}
---- !u!50 &2969313242509035762
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3806019734792902934}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 6

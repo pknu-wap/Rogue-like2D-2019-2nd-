@@ -4,29 +4,23 @@ using UnityEngine;
 
 public class GhostGun : MonoBehaviour
 {
-    public int damage;
     [SerializeField]
-    private GameObject Bullet;
-    public void UpdateLongAtkMonsterGunShoot(Ghost mon)
-    {
+    private GameObject GhostBullet;
 
-        if (mon.shootTime <= mon.shoot)
+    public void Shooting(Ghost ghost)
+    {
+        if (ghost.shootInterval <= ghost.shootChance)
         {
-            if (mon.transform.localScale.x > 0)
-            {
-                GhostBullet _bullet = Instantiate(Bullet, transform.position, Quaternion.identity).GetComponent<GhostBullet>();
-                _bullet.damage = this.damage;
-                _bullet.transform.localScale = new Vector3(1, 1, 1);
-                _bullet.bulletSpeed = mon.AttackSpeed;
-            }
+            //고스트 불릿 생성 후
+            GhostBullet _bullet = Instantiate(GhostBullet, transform.position, Quaternion.identity).GetComponent<GhostBullet>();
+
+            //부모인 고스트와 위치 관계에 따라 보이는 방향 설정
+            if(transform.position.x > transform.GetComponentInParent<Ghost>().transform.position.x)
+                _bullet.transform.localScale = new Vector3(-3, 3, 3);
             else
-            {
-                GhostBullet _bullet = Instantiate(Bullet, transform.position, Quaternion.identity).GetComponent<GhostBullet>();
-                _bullet.damage = this.damage;
-                _bullet.transform.localScale = new Vector3(-1, 1, 1);
-                _bullet.bulletSpeed = mon.AttackSpeed;
-            }
-            mon.shoot = 0;
+                _bullet.transform.localScale = new Vector3(3, 3, 3);
+
+            ghost.shootChance = 0;
         }
     }
 }

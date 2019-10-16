@@ -2,17 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
 public class Monster : MonoBehaviour
 {
-    public enum MONSTER_TYPE
-    {
-        SHORT_ATK,
-        LONG_ATK,
-        DEBUFF,
-        END,
-
-    }
-
     public enum MONSTER_STATUS
     {
         PATROL,
@@ -22,73 +14,64 @@ public class Monster : MonoBehaviour
         END,
     }
 
-    public MONSTER_TYPE monsterType;
-    public MONSTER_STATUS monsterStatus;
-    public float Speed;
-    public float AttackSpeed;
-    public float attack;
-    public float attackTime;
-    public int Hp;
-    public int MaxHp;
-    public int MovingFlag;
-    public int damage;
-    public bool isDead;
-    public bool isAttacked;
-    public double DetectRadius;
-    public double AttackRadius;
-    public double Detect;
-    public double DetectTime;
-    public bool isAtacking;
-    public bool isTracing;
-    public Transform target;
-    public IEnumerator currentState;
-    public bool isNewState;
-    public Animator animator;
+    protected MONSTER_STATUS monsterStatus;
+    protected IEnumerator currentState;
+    protected bool isDead;
+    protected bool xDirection;
+    protected int xyAxisDirection;
+    protected int zAxisDirection;
+    protected int hp;
+    protected int maxHp;
+    protected int movingFlag;
+    protected int damage;
+    protected float speed;
+    protected float attackSpeed;
+    protected float attackChance;
+    protected float attackInterval;
+    protected double detectRange;
+    protected double attackRange;
+    protected Vector2 moveVelocity;
+    protected Transform player;
+    protected Animator animator;
+    protected Rigidbody2D rigidy2d;
 
-
+    // 초기에 한 번 실행, 몬스터의 초기 상태는 정찰
     public void OnEnable()
     {
+        Init();
         StartCoroutine("MonsterFSM");
         StartCoroutine("Move");
         monsterStatus = MONSTER_STATUS.PATROL;
-        target = GameObject.FindGameObjectWithTag("Player").transform; //.GetChild(0).transform;
-        animator = gameObject.GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    public virtual void InitMonster() { }
+    // 몬스터 초기화
+    public virtual void Init() { }
 
+    // 변화 반영
     public virtual void UpdateMonster() { }
 
-    //상태가 변화하면 bool값을 바꿔서 진행중이던 모션을 멈추고 새로운 모션을 실행한다.
-    //이건 자식 클래스에서 그대로 사용하자, 모든 몬스터가 동일
+    // 다음 상태 저장
     virtual public void ChangeMonsterState(MONSTER_STATUS status)
     {
-        isNewState = true;
         monsterStatus = status;
     }
 
-    //현재상태유지
+    // 오브젝트 사망 체크 후 상태변화
     virtual public IEnumerator MonsterFSM()
     {
         while (!isDead)
         {
-            isNewState = false;
             yield return StartCoroutine(monsterStatus.ToString());
         }
     }
 
-    public virtual IEnumerator CHASE()
-    {
-        yield return null;
-    }
-
-
-    virtual public IEnumerator Move()
-    {
-        yield return null;
-    }
-
     virtual public IEnumerator PATROL()
+    {
+        yield return null;
+    }
+
+    public virtual IEnumerator CHASE()
     {
         yield return null;
     }
@@ -103,11 +86,15 @@ public class Monster : MonoBehaviour
         yield return null;
     }
 
+    virtual public IEnumerator Move()
+    {
+        yield return null;
+    }
+
     virtual public void DamagedByPlayerBullet(int damage)
     {
-        isAttacked = true;
-        Hp -= damage;
-        if (Hp <= 0 && !isDead)
+        hp -= damage;
+        if (hp <= 0 && !isDead)
             Dead();
     }
 
@@ -118,10 +105,9 @@ public class Monster : MonoBehaviour
     }
 
     virtual public void Dead()
-    {
-
+    { 
         isDead = true;
-        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
+        gameObject.SetActive(false);
     }
 
     public bool EndAnimationDone(string EventEndAnimationName)

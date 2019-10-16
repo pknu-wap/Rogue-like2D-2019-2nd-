@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Ghost : Monster
 {
-    public double shootTime;
-    public double shoot;
+    public double shootInterval;
+    public double shootChance;
     public GhostGun Gun;
-    public int UpDownMovingFlag;
 
     private void Start()
     {
-        InitMonster();
+        Init();
         ChangeMonsterState(MONSTER_STATUS.PATROL);
+    }
+
+    public override void Init()
+    {
+        Gun = transform.GetChild(0).GetComponent<GhostGun>();
+        transform.localScale = new Vector2(5f, 5f);
+        attackRange = 20f;
+        detectRange = 30f;
     }
 
     private void Update()
@@ -20,110 +27,22 @@ public class Ghost : Monster
         UpdateMonster();
     }
 
-    public void Shoot()
+    public override void UpdateMonster()
     {
-
-        Gun.UpdateLongAtkMonsterGunShoot(this);
+        shootChance += Time.deltaTime;
     }
+
+    public override IEnumerator Move()
+    {
+        xyAxisDirection = Random.Range(0, 2);
+        zAxisDirection = Random.Range(0, 2);
+        yield return new WaitForSeconds(2f);
+        StartCoroutine("Move");
+    }
+
     public override void ChangeMonsterState(MONSTER_STATUS status)
     {
         base.ChangeMonsterState(status);
-    }
-
-    public override IEnumerator ATTACK()
-    {
-        do
-        {
-            yield return null;
-            if (isNewState) break;
-
-
-            if (Vector3.Distance(transform.position, target.position) > AttackRadius)
-            {
-
-                ChangeMonsterState(MONSTER_STATUS.CHASE);
-                break;
-            }
-
-            if (target.position.x < transform.position.x)
-            {
-                transform.localScale = new Vector3(5, 5, 5);
-            }
-            else if (target.position.x >= transform.position.x)
-            {
-
-                transform.localScale = new Vector3(-5, 5, 5);
-            }
-            if (shoot > shootTime)
-                Shoot();
-
-
-        } while (!isNewState);
-    }
-
-
-
-    public override IEnumerator CHASE()
-    {
-        do
-        {
-            yield return null;
-            if (isNewState) break;
-
-
-            if (Vector3.Distance(transform.position, target.position) < AttackRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.ATTACK);
-                break;
-            }
-
-
-            if (Vector3.Distance(transform.position, target.position) > DetectRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.PATROL);
-                break;
-            }
-
-
-            Vector3 moveVelocity = Vector3.zero;
-            moveVelocity = Vector3.Normalize(target.position - transform.position);
-
-            if (target.position.x < transform.position.x)
-            {
-
-                transform.localScale = new Vector3(5, 5, 1);
-            }
-            else if (target.position.x >= transform.position.x)
-            {
-
-                transform.localScale = new Vector3(-5, 5, 1);
-            }
-
-
-            transform.position += moveVelocity * Speed * Time.deltaTime;
-
-
-
-        } while (!isNewState);
-    }
-
-    public override void DamagedByPlayerBullet(int damage)
-    {
-        base.DamagedByPlayerBullet(damage);
-    }
-
-    public override void Dead()
-    {
-        base.Dead();
-    }
-
-    public override void InitMonster()
-    {
-        shootTime = 1.0f;
-        shoot = 0;
-        Gun = transform.GetChild(0).GetComponent<GhostGun>();
-        Gun.damage = this.damage;
-        transform.localScale = new Vector2(5f, 5f);
     }
 
     public override IEnumerator MonsterFSM()
@@ -131,83 +50,137 @@ public class Ghost : Monster
         return base.MonsterFSM();
     }
 
-    public override IEnumerator Move()
-    {
-        MovingFlag = Random.Range(0, 3);
-        UpDownMovingFlag = Random.Range(0, 3);
-        yield return new WaitForSeconds(3f);
-        StartCoroutine("Move");
-    }
-
     public override IEnumerator PATROL()
     {
         do
         {
             yield return null;
-            if (isNewState) break;
 
-            if (Vector3.Distance(transform.position, target.position) < AttackRadius)
+            if (Vector3.Distance(transform.position, player.position) < attackRange)
+            {
+                ChangeMonsterState(MONSTER_STATUS.ATTACK);
+                break;
+            }
+
+            if (Vector3.Distance(transform.position, player.position) < detectRange)
+            {
+                ChangeMonsterState(MONSTER_STATUS.CHASE);
+                break;
+            }
+
+            if (xyAxisDirection == 0)
+            {
+                moveVelocity = Vector2.left;
+                transform.localScale = new Vector2(5, 5);
+
+            }
+            else if (xyAxisDirection == 1)
+            {
+                moveVelocity = Vector2.right;
+                transform.localScale = new Vector2(-5, 5);
+            }
+
+            if (zAxisDirection == 0)
+            {
+                moveVelocity += Vector2.up;
+            }
+            else if (zAxisDirection == 1)
+            {
+                moveVelocity += Vector2.down;
+            }
+
+            transform.position += (Vector3)moveVelocity * Time.deltaTime;
+
+        } while (!isDead);
+    }
+
+    public override IEnumerator ATTACK()
+    {
+        do
+        {
+            yield return null;
+
+            if (Vector3.Distance(transform.position, player.position) > attackRange)
+            {
+                ChangeMonsterState(MONSTER_STATUS.CHASE);
+                break;
+            }
+
+            if (Vector3.Distance(transform.position, player.position) > detectRange)
+            {
+                ChangeMonsterState(MONSTER_STATUS.PATROL);
+                break;
+            }
+
+            if (player.position.x < transform.position.x)
+            {
+                transform.localScale = new Vector2(5, 5);
+            }
+            else if (player.position.x >= transform.position.x)
+            {
+
+                transform.localScale = new Vector2(-5, 5);
+            }
+            if (shootChance >= shootInterval)
+                Shoot();
+
+        } while (!isDead);
+    }
+
+    public override IEnumerator CHASE()
+    {
+        do
+        {
+            yield return null;
+
+            if (Vector3.Distance(transform.position, player.position) < attackRange)
             {
                 ChangeMonsterState(MONSTER_STATUS.ATTACK);
                 break;
             }
 
 
-            if (Vector3.Distance(transform.position, target.position) < DetectRadius)
+            if (Vector3.Distance(transform.position, player.position) > detectRange)
             {
-                ChangeMonsterState(MONSTER_STATUS.CHASE);
+                ChangeMonsterState(MONSTER_STATUS.PATROL);
                 break;
             }
 
+            moveVelocity = Vector3.Normalize(player.position - transform.position);
 
-            Vector3 moveVelocity = Vector3.zero;
-
-            if (MovingFlag == 1)
+            if (player.position.x < transform.position.x)
             {
-                moveVelocity = Vector3.left;
-                transform.localScale = new Vector3(5, 5, 1);
-
-            }
-            else if (MovingFlag == 2)
-            {
-                moveVelocity = Vector3.right;
-                transform.localScale = new Vector3(-5, 5, 1);
+                transform.localScale = new Vector2(5, 5);
             }
 
-            if (UpDownMovingFlag == 1)
+            else if (player.position.x >= transform.position.x)
             {
-                moveVelocity += Vector3.up;
-            }
-            else if (UpDownMovingFlag == 2)
-            {
-                moveVelocity += Vector3.down;
+                transform.localScale = new Vector2(-5, 5);
             }
 
+            transform.position += (Vector3)moveVelocity * Time.deltaTime;
 
-            transform.position += moveVelocity * Speed * Time.deltaTime;
-
-
-
-        } while (!isNewState);
-
+        } while (!isDead);
     }
 
-    public override void UpdateMonster()
+    public override void Dead()
     {
-        shoot += Time.deltaTime;
+        base.Dead();
+    }
+
+    public override void DamagedByPlayerBullet(int damage)
+    {
+        base.DamagedByPlayerBullet(damage);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
-        {
-            if (isAttacked)
-            {
-                ChangeMonsterState(MONSTER_STATUS.CHASE);
-                isAttacked = false;
-            }
-
-        }
-
+            DamagedByPlayerBullet(collision.GetComponent<Bullet>().damage);
+    }
+    public void Shoot()
+    {
+        Gun.Shooting(this);
     }
 }
+

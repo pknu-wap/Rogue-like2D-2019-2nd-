@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BurningGhoul : Monster
 {
-    bool isDirection;
-
-    void Start()
+    public override void Init()
     {
+        attackRange = 20f;
+        speed = 5;
         damage = 5;
-        Hp = 1;
+        hp = 1;
+        animator = gameObject.GetComponent<Animator>();
     }
 
-    #region override_Monster
     public override void ChangeMonsterState(MONSTER_STATUS status)
     {
         base.ChangeMonsterState(status);
@@ -25,13 +25,15 @@ public class BurningGhoul : Monster
 
     public override IEnumerator Move()
     {
-        isDirection = transform.GetChild(0).GetComponent<WallCollider>().isWall;
-        if (isDirection)
+        xDirection = transform.GetChild(0).GetComponent<WallCollider>().isWall;
+
+        if (xDirection)
             transform.localScale = new Vector2(8, 8);
         else
             transform.localScale = new Vector2(-8, 8);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
+
         StartCoroutine("Move");
     }
 
@@ -39,91 +41,50 @@ public class BurningGhoul : Monster
     {
         do
         {
-            yield return null;
-            if (isNewState) break;
+            yield return null;         
 
-            if (Vector2.Distance(transform.position, target.position) < AttackRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.ATTACK);
-            }
-
-            if (Vector2.Distance(transform.position, target.position) < DetectRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.CHASE);
-            }
-
-            if(isDirection)
-                transform.position += Vector3.left *Speed * Time.deltaTime;
+            if(xDirection)
+                transform.position += Vector3.left * Time.deltaTime * speed;
             else
-                transform.position += Vector3.right *Speed * Time.deltaTime;
+                transform.position += Vector3.right * Time.deltaTime * speed;
 
 
-        } while (!isNewState);
+        } while (!isDead);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision == null)
+            return;
+
         if (collision.CompareTag("Bullet"))
         {
-            Dead();
-        }
-
-        if (collision.CompareTag("Player"))
-        {
-            ChangeMonsterState(MONSTER_STATUS.ATTACK);
+            DamagedByPlayerBullet(collision.GetComponent<Bullet>().damage);
         }
     }
 
-    public override IEnumerator ATTACK()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        yield return null;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            animator.SetBool("isDead", true);
 
-        Hp -= 1;
+            other.gameObject.GetComponent<Player>().PlayerDamaged(damage);
 
-        target.GetComponent<Player>().PlayerDamaged(damage);
-
-        if (Hp <= 0)
             Dead();
+        }
+    }
 
+    public override void DamagedByPlayerBullet(int damage)
+    {
+        hp -= damage;
+
+        if (hp <= damage)
+            Dead();
     }
 
     public override void Dead()
     {
-        animator.SetBool("isDead", true);
         base.Dead();
     }
-
-    public override IEnumerator CHASE()
-    {
-        do
-        {
-            yield return null;
-            if (isNewState) break;
-
-            if (Vector2.Distance(transform.position, target.position) < AttackRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.ATTACK);
-            }
-
-            if (Vector2.Distance(transform.position, target.position) > DetectRadius)
-            {
-                ChangeMonsterState(MONSTER_STATUS.PATROL);
-            }
-
-            Vector3 moveVelocity = Vector3.zero;
-            if (target.position.x < transform.position.x)
-            {
-                moveVelocity = Vector3.left;
-                transform.localScale = new Vector3(8, 8, 8);
-            }
-            else if (target.position.x >= transform.position.x)
-            {
-                moveVelocity = Vector3.right;
-                transform.localScale = new Vector3(-8, 8, 8);
-            }
-
-            transform.position += moveVelocity * Speed * Time.deltaTime;
-        } while (!isNewState);
-    }
 }
-#endregion

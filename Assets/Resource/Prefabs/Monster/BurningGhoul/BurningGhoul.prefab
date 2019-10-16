@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8868388541347683526}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -37.96, y: -0.54, z: -4}
+  m_LocalPosition: {x: -214.06693, y: -0.5734401, z: -9}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 8868388541354084424}
@@ -97,27 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e914668ebff9f5f4e8d2b52a5cac8353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterType: 0
-  monsterStatus: 0
-  Speed: 10
-  AttackSpeed: 0
-  attack: 0
-  attackTime: 0
-  Hp: 1
-  MaxHp: 0
-  MovingFlag: 0
-  damage: 1
-  isDead: 0
-  isAttacked: 0
-  DetectRadius: 5
-  AttackRadius: 2
-  Detect: 0
-  DetectTime: 0
-  isAtacking: 0
-  isTracing: 0
-  target: {fileID: 0}
-  isNewState: 0
-  animator: {fileID: 0}
 --- !u!61 &8868388541347683547
 BoxCollider2D:
   m_ObjectHideFlags: 0
